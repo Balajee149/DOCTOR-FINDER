@@ -1,0 +1,98 @@
+import { useState, useEffect } from "react";
+import { useLocation, useSearch } from "wouter";
+
+export interface FilterState {
+  search: string;
+  consultationType: string;
+  specialties: string[];
+  sortBy: string;
+}
+
+export function useFilters() {
+  const [location, setLocation] = useLocation();
+  const search = useSearch();
+  const [filters, setFiltersState] = useState<FilterState>({
+    search: "",
+    consultationType: "",
+    specialties: [],
+    sortBy: "",
+  });
+
+  // Load filters from URL on initial render
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    
+    const initialFilters: FilterState = {
+      search: params.get("search") || "",
+      consultationType: params.get("type") || "",
+      specialties: params.get("specialties") ? params.get("specialties")!.split(",") : [],
+      sortBy: params.get("sort") || "",
+    };
+    
+    setFiltersState(initialFilters);
+  }, [search]);
+
+  // Update URL when filters change
+  const setFilters = (newFilters: FilterState) => {
+    setFiltersState(newFilters);
+    
+    const params = new URLSearchParams();
+    
+    if (newFilters.search) {
+      params.set("search", newFilters.search);
+    }
+    
+    if (newFilters.consultationType) {
+      params.set("type", newFilters.consultationType);
+    }
+    
+    if (newFilters.specialties.length > 0) {
+      params.set("specialties", newFilters.specialties.join(","));
+    }
+    
+    if (newFilters.sortBy) {
+      params.set("sort", newFilters.sortBy);
+    }
+    
+    const queryString = params.toString();
+    const newLocation = queryString ? `/?${queryString}` : "/";
+    
+    if (newLocation !== location) {
+      setLocation(newLocation);
+    }
+  };
+
+  // Reset all filters
+  const resetFilters = () => {
+    setFilters({
+      search: "",
+      consultationType: "",
+      specialties: [],
+      sortBy: "",
+    });
+  };
+
+  // Remove a specific filter
+  const removeFilter = (key: keyof FilterState, value?: string) => {
+    if (key === "specialties" && value) {
+      // Remove specific specialty
+      setFilters({
+        ...filters,
+        specialties: filters.specialties.filter(s => s !== value)
+      });
+    } else {
+      // Remove entire filter category
+      setFilters({
+        ...filters,
+        [key]: key === "specialties" ? [] : ""
+      });
+    }
+  };
+
+  return {
+    filters,
+    setFilters,
+    resetFilters,
+    removeFilter,
+  };
+}

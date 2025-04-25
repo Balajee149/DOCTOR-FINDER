@@ -42,7 +42,17 @@ export default function Home() {
   const AppointmentsModal = () => {
     if (!showAppointments) return null;
     
-    const appointments = JSON.parse(localStorage.getItem('doctorAppointments') || '[]');
+    // Define an interface for appointment type
+    interface Appointment {
+      doctor: {
+        name: string;
+        specialties?: string[];
+      };
+      date: string;
+      time: string;
+    }
+    
+    const appointments: Appointment[] = JSON.parse(localStorage.getItem('doctorAppointments') || '[]');
     
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -66,7 +76,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="space-y-3">
-              {appointments.map((appointment, index) => (
+              {appointments.map((appointment: Appointment, index: number) => (
                 <div key={index} className="bg-white border border-neutral-200 rounded-lg p-4 shadow-sm">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold text-neutral-800">Dr. {appointment.doctor.name}</h3>
@@ -157,15 +167,13 @@ export default function Home() {
 
         <div className="lg:flex lg:gap-8">
           {/* Filter Sidebar */}
-          <div className="lg:w-1/4">
-            <FilterPanel 
-              specialties={specialties} 
-              filters={filters} 
-              setFilters={setFilters} 
-              resetFilters={resetFilters}
-              isMobile={isMobile} 
-            />
-          </div>
+          <FilterPanel 
+            specialties={specialties} 
+            filters={filters} 
+            setFilters={setFilters} 
+            resetFilters={resetFilters}
+            isMobile={isMobile} 
+          />
 
           {/* Main Content */}
           <main className="lg:w-3/4 bg-white p-6 rounded-xl shadow-sm">

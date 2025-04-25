@@ -43,7 +43,13 @@ export default function SpecialtiesFilter({
                 onCheckedChange={(checked) => handleChange(specialty, !!checked)}
                 data-testid={specialtyToTestId(specialty)}
               />
-              <Label htmlFor={specialty}>{specialty}</Label>
+              <Label 
+                htmlFor={specialty} 
+                className="text-sm cursor-pointer"
+                data-testid={`label-${specialtyToTestId(specialty)}`}
+              >
+                {specialty}
+              </Label>
             </div>
           ))}
         </div>

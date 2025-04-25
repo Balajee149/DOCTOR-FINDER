@@ -108,7 +108,45 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
               {doctor.fee ? `₹${doctor.fee}` : 'Fee not specified'}
             </p>
           </div>
-          <Button className="bg-primary hover:bg-primary-dark text-white font-medium shadow-sm">
+          <Button 
+            className="bg-primary hover:bg-primary-dark text-white font-medium shadow-sm"
+            data-testid="book-button"
+            onClick={() => {
+              // Generate a random date and time for the appointment
+              const today = new Date();
+              const appointmentDate = new Date(today);
+              appointmentDate.setDate(today.getDate() + Math.floor(Math.random() * 7) + 1);
+              
+              const dateString = appointmentDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'short',
+                day: 'numeric'
+              });
+              
+              const hours = 9 + Math.floor(Math.random() * 8); // 9 AM to 5 PM
+              const minutes = ['00', '15', '30', '45'][Math.floor(Math.random() * 4)];
+              const timeString = `${hours}:${minutes} ${hours >= 12 ? 'PM' : 'AM'}`;
+              
+              // Save the appointment
+              const appointment = {
+                doctor,
+                date: dateString,
+                time: timeString
+              };
+              
+              // Store in localStorage
+              const storedAppointments = localStorage.getItem('doctorAppointments');
+              const appointments = storedAppointments ? JSON.parse(storedAppointments) : [];
+              appointments.push(appointment);
+              localStorage.setItem('doctorAppointments', JSON.stringify(appointments));
+              
+              // Notify other components
+              window.dispatchEvent(new Event('storage-updated'));
+              
+              // Show confirmation
+              window.alert(`Appointment booked with Dr. ${doctor.name} on ${dateString} at ${timeString}`);
+            }}
+          >
             Book Appointment
           </Button>
         </div>

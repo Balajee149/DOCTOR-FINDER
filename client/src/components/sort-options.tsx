@@ -21,7 +21,7 @@ export default function SortOptions({ sortBy, onChange }: SortOptionsProps) {
               id="sort-fee" 
               data-testid="filter-sort-fee" 
             />
-            <Label htmlFor="sort-fee">Fees (Low to High)</Label>
+            <Label htmlFor="sort-fee" data-testid="filter-header-fee">Fees (Low to High)</Label>
           </div>
           
           <div className="flex items-center space-x-2">

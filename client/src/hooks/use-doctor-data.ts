@@ -17,7 +17,34 @@ export function useDoctorData() {
       if (!res.ok) {
         throw new Error("Failed to fetch doctors");
       }
-      return res.json();
+      
+      const rawData = await res.json();
+      
+      // Transform API data to match our app's expected format
+      return rawData.map((doctor: any, index: number) => {
+        // Extract numeric experience from string like "13 Years of experience"
+        const expMatch = doctor.experience ? doctor.experience.match(/(\d+)/) : null;
+        const experience = expMatch ? parseInt(expMatch[1], 10) : 0;
+        
+        // Extract fee from string like "₹ 500"
+        const feeMatch = doctor.fees ? doctor.fees.match(/(\d+)/) : null;
+        const fee = feeMatch ? parseInt(feeMatch[1], 10) : 0;
+        
+        // Extract specialties from specialities array of objects
+        const specialties = doctor.specialities?.map((s: any) => s.name) || [];
+        
+        // Determine consultation type (defaulting to "clinic" if video_consult is false or not present)
+        const consultationType = doctor.video_consult ? "video" : "clinic";
+        
+        return {
+          id: Number(doctor.id) || index + 1,
+          name: doctor.name || "",
+          specialties,
+          experience,
+          fee,
+          consultationType
+        };
+      });
     }
   });
 

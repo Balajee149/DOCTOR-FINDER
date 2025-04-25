@@ -1,0 +1,68 @@
+# Campus Assessment: Doctor Listing Page
+
+## Objective
+Build a Doctor Listing Page with the following features.
+
+---
+
+## Features
+
+### 1. Autocomplete Search
+- Input bar at the top (`data-testid="autocomplete-input"`).
+- Show max 3 suggestions (`data-testid="suggestion-item"`).
+- Suggestions based on doctor `name`.
+- On click or Enter, filter doctor list.
+- No suggestions shown if no matches found.
+
+### 2. Filters Panel
+#### Consultation Type (Single Select - Radio Buttons)
+- Options: 
+  - Video Consult (`data-testid="filter-video-consult"`)
+  - In Clinic (`data-testid="filter-in-clinic"`)
+- Only one option selectable at a time.
+
+#### Specialties (Multi-Select - Checkboxes)
+- Dynamically load specialties from dataset.
+- Doctors may have multiple specialties.
+- Allow multiple specialties to be selected simultaneously.
+- Each specialty must use the provided `data-testid` attributes (see attached image).
+
+#### Sort Options
+- Sort by:
+  - Fees ascending (`data-testid="filter-header-fee"`)
+  - Experience descending (`data-testid="filter-header-sort"`)
+- First applied filter takes precedence.
+
+### 3. Doctor Listing
+- Render doctor cards (`data-testid="doctor-card"`).
+- Each card must show:
+  - Doctor name (`data-testid="doctor-name"`)
+  - Specialties (`data-testid="doctor-specialty"`)
+  - Experience (`data-testid="doctor-experience"`)
+  - Fee (`data-testid="doctor-fee"`)
+
+---
+
+## API
+- URL: `https://srijandubey.github.io/campus-api-mock/SRM-C1-25.json`
+- Fetch all doctor data once at page load.
+- All search, filtering, and sorting should happen **client-side**.
+
+---
+
+## URL Behavior
+- Show applied filters and search terms as **query params**.
+- Navigating back should **retain** applied filters and search using query params.
+
+---
+
+## Testing Requirements
+- Use exact `data-testid` attributes provided (refer attached image) for all interactive/display elements.
+- No missing or renamed attributes.
+
+---
+
+## Notes
+- Focus on functionality over perfect UI.
+- Sample UI screenshot provided for rough reference.
+

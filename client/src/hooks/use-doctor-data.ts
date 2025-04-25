@@ -110,23 +110,23 @@ function applyFilters(doctors: Doctor[], filters: FilterState): Doctor[] {
   
   // Apply search filter
   if (filters.search) {
-    filtered = filtered.filter(doctor => 
+    filtered = filtered.filter((doctor: Doctor) => 
       doctor.name && doctor.name.toLowerCase().includes(filters.search.toLowerCase())
     );
   }
   
   // Apply consultation type filter
   if (filters.consultationType) {
-    filtered = filtered.filter(doctor => 
+    filtered = filtered.filter((doctor: Doctor) => 
       doctor.consultationType === filters.consultationType
     );
   }
   
   // Apply specialty filters
   if (filters.specialties.length > 0) {
-    filtered = filtered.filter(doctor => 
+    filtered = filtered.filter((doctor: Doctor) => 
       doctor.specialties && Array.isArray(doctor.specialties) && 
-      filters.specialties.some(specialty => 
+      filters.specialties.some((specialty: string) => 
         doctor.specialties.includes(specialty)
       )
     );
@@ -135,14 +135,14 @@ function applyFilters(doctors: Doctor[], filters: FilterState): Doctor[] {
   // Apply sorting
   if (filters.sortBy) {
     if (filters.sortBy === 'fee') {
-      filtered.sort((a, b) => {
+      filtered.sort((a: Doctor, b: Doctor) => {
         // Handle cases where fee might be undefined
         const feeA = typeof a.fee === 'number' ? a.fee : Infinity;
         const feeB = typeof b.fee === 'number' ? b.fee : Infinity;
         return feeA - feeB;
       });
     } else if (filters.sortBy === 'experience') {
-      filtered.sort((a, b) => {
+      filtered.sort((a: Doctor, b: Doctor) => {
         // Handle cases where experience might be undefined
         const expA = typeof a.experience === 'number' ? a.experience : -1;
         const expB = typeof b.experience === 'number' ? b.experience : -1;

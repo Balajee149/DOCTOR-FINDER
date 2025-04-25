@@ -64,12 +64,27 @@ export function useFilters() {
 
   // Reset all filters
   const resetFilters = () => {
+    // Set filters back to initial values
     setFilters({
       search: "",
       consultationType: "",
       specialties: [],
       sortBy: "",
     });
+    
+    // Also reset any UI state that might be related to filters
+    // For example, any autocomplete or dropdown that might be open
+    console.log("All filters have been reset");
+    
+    // Force a re-render by setting state again after a short delay
+    setTimeout(() => {
+      setFilters({
+        search: "",
+        consultationType: "",
+        specialties: [],
+        sortBy: "",
+      });
+    }, 50);
   };
 
   // Remove a specific filter

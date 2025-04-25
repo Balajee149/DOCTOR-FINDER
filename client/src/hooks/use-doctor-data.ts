@@ -80,12 +80,38 @@ export function useDoctorData() {
 
 // Helper function to apply filters
 function applyFilters(doctors: Doctor[], filters: FilterState): Doctor[] {
-  let filtered = [...doctors];
+  // If doctors array is empty or filters are invalid, return empty array
+  if (!doctors || !Array.isArray(doctors) || doctors.length === 0) {
+    return [];
+  }
+
+  // Create a deep copy of the doctors array to avoid mutation issues
+  let filtered = JSON.parse(JSON.stringify(doctors));
+  
+  // Check if all filters are empty/default values (this is the "all filters cleared" state)
+  const areAllFiltersEmpty = 
+    !filters.search && 
+    !filters.consultationType && 
+    filters.specialties.length === 0 && 
+    !filters.sortBy;
+    
+  // If all filters are empty, return all doctors
+  if (areAllFiltersEmpty) {
+    console.log("All filters are empty, returning all doctors:", filtered.length);
+    
+    // Still apply default sorting if no filters are active
+    return filtered.sort((a: Doctor, b: Doctor) => {
+      // Sort by name as default
+      const nameA = a.name ? a.name.toLowerCase() : '';
+      const nameB = b.name ? b.name.toLowerCase() : '';
+      return nameA.localeCompare(nameB);
+    });
+  }
   
   // Apply search filter
   if (filters.search) {
     filtered = filtered.filter(doctor => 
-      doctor.name.toLowerCase().includes(filters.search.toLowerCase())
+      doctor.name && doctor.name.toLowerCase().includes(filters.search.toLowerCase())
     );
   }
   
@@ -125,5 +151,6 @@ function applyFilters(doctors: Doctor[], filters: FilterState): Doctor[] {
     }
   }
   
+  console.log("Filtered doctors:", filtered.length);
   return filtered;
 }

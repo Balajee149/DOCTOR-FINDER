@@ -1,0 +1,84 @@
+Got it! Here’s a **polished and clearer version** of your prompt that will guide the AI to **generate exactly** what you want, based on your details:
+
+---
+
+**Prompt:**
+
+---
+
+### Campus Assessment Task: Doctor Listing Page Development
+
+**Objective:**  
+Develop and deploy a fully functional Doctor Listing Page based on the following detailed specifications:
+
+---
+
+### Core Features to Implement:
+
+1. **Autocomplete Search Header:**
+   - Search bar at the top for doctor names (`data-testid="autocomplete-input"`).
+   - Dropdown showing a maximum of **3 suggestions** (`data-testid="suggestion-item"`).
+   - Suggestions should match dynamically based on the doctor's **name** field.
+   - Selecting a suggestion (click or Enter key) filters the doctor list accordingly.
+   - If no matches are found, show **no suggestions**.
+
+2. **Dynamic Filter Panel:**
+   - **Consultation Type Filter (Single Select - Radio Buttons):**
+     - Options: **Video Consult** (`data-testid="filter-video-consult"`), **In Clinic** (`data-testid="filter-in-clinic"`).
+     - Only one option can be active at a time.
+
+   - **Specialty Filter (Multi Select - Checkboxes):**
+     - Dynamically load all doctor specialties from the API.
+     - Doctors may belong to multiple specialties.
+     - Allow multiple specialties to be selected at once.
+     - Use `data-testid` attributes as listed in the attached image for each specialty checkbox.
+
+   - **Sort Options Filter (Dropdown or Buttons):**
+     - Sort doctor list by:
+       - **Fees (ascending)** (`data-testid="filter-header-fee"`)
+       - **Experience (descending)** (`data-testid="filter-header-sort"`)
+     - Sorting should respect the order of applied filters, with the first filter taking precedence.
+
+3. **Doctor Listing:**
+   - Fetch and render doctor data from the provided API.
+   - Each doctor should be displayed inside a wrapper (`data-testid="doctor-card"`).
+   - Include:
+     - **Name** (`data-testid="doctor-name"`)
+     - **Specialties** (`data-testid="doctor-specialty"`)
+     - **Experience** (`data-testid="doctor-experience"`)
+     - **Fee** (`data-testid="doctor-fee"`)
+
+---
+
+### API Instructions:
+
+- **API URL:**  
+  `https://srijandubey.github.io/campus-api-mock/SRM-C1-25.json`
+  
+- Fetch doctor data **once** on page load.
+- **All searching, filtering, and sorting must be handled client-side** without additional API calls.
+- **Important:** Display **current applied filters as URL query parameters**.
+- Navigating back should **retain** search and filter states using URL query parameters.
+
+---
+
+### Test Automation Requirements:
+
+- Strictly use the `data-testid` attributes provided in the **attached image**.
+- Match the attribute names **exactly** for corresponding elements.
+
+---
+
+### Additional Notes:
+
+- A **sample UI image** is attached for reference at the bottom (follow functionality more than exact UI styling).
+- **Functionality has more weightage** than pixel-perfect UI design.
+
+---
+
+**End of Prompt**
+
+---
+
+Would you also like me to give you an even *more professional version* if you're planning to send it to a developer team or submit it somewhere? 🚀  
+(Just say "yes" if you want!)
